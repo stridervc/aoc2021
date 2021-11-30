@@ -37,7 +37,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - aoc2021
-#   - text
+    - containers
 
 tests:
   aoc2021-test:
