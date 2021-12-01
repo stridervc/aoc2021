@@ -24,5 +24,7 @@ part2 input = print $ countIncreases 0 $ map sum $ windowify $ map read $ lines 
 
 solve :: String -> IO ()
 solve input = do
+  putStr "Part 1 : "
   part1 input
+  putStr "Part 2 : "
   part2 input
