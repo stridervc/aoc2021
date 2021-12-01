@@ -3,10 +3,10 @@ module Day01
   ) where
 
 countIncreases :: Int -> [Int] -> Int
-countIncreases start all@(a:b:_)
-  | b > a     = countIncreases (start+1) xs
-  | otherwise = countIncreases start xs
-  where xs    = tail all
+countIncreases start (a:b:xs)
+  | b > a     = countIncreases (start+1) tail'
+  | otherwise = countIncreases start tail'
+  where tail' = b:xs
 countIncreases start _  = start
 
 part1 :: String -> IO ()
