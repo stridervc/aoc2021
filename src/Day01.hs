@@ -3,12 +3,11 @@ module Day01
   ) where
 
 countIncreases :: Int -> [Int] -> Int
-countIncreases start [] = start
-countIncreases start (x:xs)
-  | null xs   = start
-  | x' > x    = countIncreases (start+1) xs
+countIncreases start all@(a:b:_)
+  | b > a     = countIncreases (start+1) xs
   | otherwise = countIncreases start xs
-  where x'    = head xs
+  where xs    = tail all
+countIncreases start _  = start
 
 part1 :: String -> IO ()
 part1 input = print $ countIncreases 0 $ map read $ lines input
