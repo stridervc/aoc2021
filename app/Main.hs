@@ -14,7 +14,7 @@ solveSingle day = do
   putStrLn $ "Day " ++ day
   putStrLn "======"
   case M.lookup day solutions of
-    Just solver -> readFile (concat ["./inputs/day", day, ".txt"]) >>= solver
+    Just solver -> readFile (concat ["./inputs/input", day, ".txt"]) >>= solver
     Nothing     -> putStrLn "Not yet implemented"
 
 main :: IO ()
