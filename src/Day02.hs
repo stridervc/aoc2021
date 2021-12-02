@@ -2,7 +2,7 @@ module Day02
   ( solve
   ) where
 
-data Command = Forward Int | Down Int | Up Int | InvalidCommand String deriving (Eq, Show)
+data Command = Forward Int | Down Int | Up Int deriving (Eq, Show)
 
 data Submarine = Submarine
   { horisontalPos :: Int
@@ -14,23 +14,21 @@ newSubmarine :: Submarine
 newSubmarine = Submarine 0 0 0
 
 perform :: Submarine -> Command -> Submarine
-perform s (Forward x)         = s { horisontalPos = horisontalPos s + x }
-perform s (Down    x)         = s { depth         = depth s + x }
-perform s (Up      x)         = s { depth         = depth s - x }
-perform s (InvalidCommand e)  = error e
+perform s (Forward x) = s { horisontalPos = horisontalPos s + x }
+perform s (Down    x) = s { depth         = depth s + x }
+perform s (Up      x) = s { depth         = depth s - x }
 
 performB :: Submarine -> Command -> Submarine
-performB s (Forward x)        = s { horisontalPos = horisontalPos s + x, depth = depth s + aim s * x }
-performB s (Down    x)        = s { aim           = aim s + x }
-performB s (Up      x)        = s { aim           = aim s - x }
-performB s (InvalidCommand e) = error e
+performB s (Forward x)  = s { horisontalPos = horisontalPos s + x, depth = depth s + aim s * x }
+performB s (Down    x)  = s { aim           = aim s + x }
+performB s (Up      x)  = s { aim           = aim s - x }
 
 parseCommand :: String -> Command
 parseCommand str = case v of
   "forward" -> Forward x
   "down"    -> Down x
   "up"      -> Up x
-  _         -> InvalidCommand str
+  _         -> error str
   where v = head $ words str
         x = read $ words str !! 1
 
