@@ -27,24 +27,22 @@ performB s (InvalidCommand e) = error e
 
 parseCommand :: String -> Command
 parseCommand str = case v of
-              "forward" -> Forward x
-              "down"    -> Down x
-              "up"      -> Up x
-              _         -> InvalidCommand str
+  "forward" -> Forward x
+  "down"    -> Down x
+  "up"      -> Up x
+  _         -> InvalidCommand str
   where v = head $ words str
         x = read $ words str !! 1
 
 parseInput = map parseCommand . lines
 
 part1 :: String -> IO ()
-part1 input = do
-  let submarine = foldl perform newSubmarine $ parseInput input
-  print $ horisontalPos submarine * depth submarine
+part1 input = print $ horisontalPos submarine * depth submarine
+  where submarine = foldl perform newSubmarine $ parseInput input
 
 part2 :: String -> IO ()
-part2 input = do
-  let submarine = foldl performB newSubmarine $ parseInput input
-  print $ horisontalPos submarine * depth submarine
+part2 input = print $ horisontalPos submarine * depth submarine
+  where submarine = foldl performB newSubmarine $ parseInput input
 
 solve :: String -> IO ()
 solve input = do
