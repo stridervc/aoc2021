@@ -34,6 +34,7 @@ parseCommand str = case v of
   where v = head $ words str
         x = read $ words str !! 1
 
+parseInput :: String -> [Command]
 parseInput = map parseCommand . lines
 
 part1 :: String -> IO ()
