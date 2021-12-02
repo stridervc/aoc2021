@@ -13,8 +13,7 @@ solutions = M.fromList
 
 solveSingle :: String -> IO ()
 solveSingle day = do
-  putStrLn $ "Day " ++ day
-  putStrLn "======"
+  putStrLn $ "--- Day " ++ day ++ " ---"
   case M.lookup day solutions of
     Just solver -> readFile (concat ["./inputs/input", day, ".txt"]) >>= solver >> putStrLn ""
     Nothing     -> putStrLn "Not yet implemented"
