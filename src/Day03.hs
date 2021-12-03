@@ -18,7 +18,7 @@ mostCommon s
 -- convert string of 0s and 1s representing a binary value to int
 binToInt :: String -> Int
 binToInt s = sum $ map (\(i,v) -> v * 2^i) indexed
-  where indexed = zip [0..] $ map (\c -> if c == '1' then 1 else 0) $ reverse s
+  where indexed = zip [0..] $ map (\c -> if c == '0' then 0 else 1) $ reverse s
 
 -- invert string of 0s and 1s
 binInvert :: String -> String
@@ -36,6 +36,8 @@ part1 input = do
 
 -- Part 2 --
 
+-- position of bit to consider, and list of string representations of binary numbers
+-- filter the list according to criteria, until the list only has 1 item
 oxygenRating :: Int -> [String] -> [String]
 oxygenRating i ss
   | length ss == 1  = ss
@@ -46,6 +48,8 @@ oxygenRating i ss
         most    | zeros > ones  = '0'
                 | otherwise     = '1'
 
+-- position of bit to consider, and list of string representations of binary numbers
+-- filter the list according to criteria, until the list only has 1 item
 co2Rating :: Int -> [String] -> [String]
 co2Rating i ss
   | length ss == 1  = ss
@@ -61,6 +65,8 @@ part2 input = do
   let oxygen  = binToInt $ head $ oxygenRating 0 $ lines input
   let co2     = binToInt $ head $ co2Rating 0 $ lines input
   print $ oxygen * co2
+
+-- Main --
 
 solve :: String -> IO ()
 solve input = do
