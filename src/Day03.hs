@@ -37,11 +37,10 @@ part1 input = do
 -- Part 2 --
 
 -- position of bit to consider, and list of string representations of binary numbers
--- filter the list according to criteria, until the list only has 1 item
-oxygenRating :: Int -> [String] -> [String]
-oxygenRating i ss
-  | length ss == 1  = ss
-  | otherwise       = oxygenRating (i+1) $ filter (\s -> s!!i == most) ss
+-- filter the list according to criteria, until there's only 1 left
+oxygenRating :: Int -> [String] -> String
+oxygenRating _ [s]  = s
+oxygenRating i ss   = oxygenRating (i+1) $ filter (\s -> s!!i == most) ss
   where bits    = map (!!i) ss
         zeros   = length $ filter (=='0') bits
         ones    = length $ filter (=='1') bits
@@ -49,11 +48,10 @@ oxygenRating i ss
                 | otherwise     = '1'
 
 -- position of bit to consider, and list of string representations of binary numbers
--- filter the list according to criteria, until the list only has 1 item
-co2Rating :: Int -> [String] -> [String]
-co2Rating i ss
-  | length ss == 1  = ss
-  | otherwise       = co2Rating (i+1) $ filter (\s -> s!!i == least) ss
+-- filter the list according to criteria, until there's only 1 left
+co2Rating :: Int -> [String] -> String
+co2Rating _ [s] = s
+co2Rating i ss  = co2Rating (i+1) $ filter (\s -> s!!i == least) ss
   where bits    = map (!!i) ss
         zeros   = length $ filter (=='0') bits
         ones    = length $ filter (=='1') bits
@@ -62,8 +60,8 @@ co2Rating i ss
 
 part2 :: String -> IO ()
 part2 input = do
-  let oxygen  = binToInt $ head $ oxygenRating 0 $ lines input
-  let co2     = binToInt $ head $ co2Rating 0 $ lines input
+  let oxygen  = binToInt $ oxygenRating 0 $ lines input
+  let co2     = binToInt $ co2Rating 0 $ lines input
   print $ oxygen * co2
 
 -- Main --
