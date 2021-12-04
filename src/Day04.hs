@@ -1,5 +1,3 @@
-{-# LANGUAGE DeriveFunctor #-}
-
 module Day04
   ( solve
   ) where
