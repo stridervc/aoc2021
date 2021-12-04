@@ -24,8 +24,8 @@ dependencies:
 
 library:
   source-dirs: src
-#  dependencies:
-#  - text
+  dependencies:
+  - parsec
 
 executables:
   aoc2021:
