@@ -18,7 +18,7 @@ isStraight ((x1,y1),(x2,y2))
   | y1 == y2  = True
   | otherwise = False
 
--- expand vent line to all it's points
+-- expand vent line to all its points
 -- only works for straight and perfectly diagonal lines
 expand :: VentLine -> [VentPoint]
 expand (p1@(x1,y1),p2@(x2,y2))
@@ -33,7 +33,7 @@ expand (p1@(x1,y1),p2@(x2,y2))
 
 -- count occurences of point in list
 -- list has to be sorted
--- This could have been a map length $ sort . group :(
+-- This could have been a map length $ group . sort :(
 countOccurences' :: [VentPoint] -> [(Int,VentPoint)]
 countOccurences' []       = []
 countOccurences' (vp:vps) = (n,vp) : countOccurences' vps'
