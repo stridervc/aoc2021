@@ -36,7 +36,7 @@ countTimers fish = map (\t -> (t, count t)) [0..8]
   where count t = length $ filter (==t) fish
 
 advanceTimers :: [(Timer,Int)] -> [(Timer,Int)]
-advanceTimers tfs = map (\t -> (t, count (t+1))) [0..5] ++ [(6,count 7 + count 0)] ++ [(7,count 8)] ++ [(8,count 0)]
+advanceTimers tfs = map (\t -> (t, count (t+1))) [0..5] ++ [(6,count 7 + count 0), (7,count 8), (8,count 0)]
   where count t = snd $ tfs!!t
 
 part2 :: String -> IO ()
