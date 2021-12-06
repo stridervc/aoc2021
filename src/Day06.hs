@@ -10,6 +10,7 @@ parseInput :: String -> [Int]
 parseInput input = map read $ splitOn "," input
 
 -- Part 1 --
+-- part 1 can be rewritten with part 2 solution, but I'm leaving my quick and dirty solution as is
 
 advance :: [Int] -> [Int]
 advance []      = []
@@ -17,7 +18,7 @@ advance (x:xs)
   | x == 0    = [6,8] ++ advance xs
   | otherwise = x - 1 : advance xs
 
--- apply f x number of times to a
+-- apply f, x number of times to a
 applyX :: Int -> (a -> a) -> a -> a
 applyX 0 _ a = a
 applyX x f a = applyX (x-1) f (f a)
@@ -27,21 +28,19 @@ part1 input = print $ length $ applyX 80 advance $ parseInput input
 
 -- Part 2 --
 
-type Timer = Int
-
 -- count how many fish there are with each time remaining (0 to 8)
-countTimers :: [Timer] -> [(Timer,Int)]
-countTimers fish = map (\t -> (t, count t)) [0..8]
+countTimers :: [Int] -> [Int]
+countTimers fish = map count [0..8]
   where count t = length $ filter (==t) fish
 
-advanceTimers :: [(Timer,Int)] -> [(Timer,Int)]
-advanceTimers tfs = map (\t -> (t, count (t+1))) [0..5] ++ [(6,count 7 + count 0), (7,count 8), (8,count 0)]
-  where count t = snd $ tfs!!t
+advanceTimers :: [Int] -> [Int]
+advanceTimers tfs = map (\t -> count (t+1)) [0..5] ++ [count 7 + count 0, count 8, count 0]
+  where count t = tfs!!t
 
 part2 :: String -> IO ()
 part2 input = do
   let advanced = applyX 256 advanceTimers $ countTimers $ parseInput input
-  print $ sum $ map snd advanced
+  print $ sum advanced
 
 solve :: String -> IO ()
 solve input = do
