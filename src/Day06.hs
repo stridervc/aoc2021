@@ -18,28 +18,10 @@ advanceTimers :: [Int] -> [Int]
 advanceTimers tfs = map (\t -> count (t+1)) [0..5] ++ [count 7 + count 0, count 8, count 0]
   where count t = tfs!!t
 
--- apply f, x number of times to a
-applyX :: Int -> (a -> a) -> a -> a
-applyX 0 _ a = a
-applyX x f a = applyX (x-1) f (f a)
-
--- Part 1 --
-
-part1 :: String -> IO ()
-part1 input = do
-  let advanced = applyX 80 advanceTimers $ countTimers $ parseInput input
-  print $ sum advanced
-
--- Part 2 --
-
-part2 :: String -> IO ()
-part2 input = do
-  let advanced = applyX 256 advanceTimers $ countTimers $ parseInput input
-  print $ sum advanced
-
 solve :: String -> IO ()
 solve input = do
+  let advanced = iterate advanceTimers $ countTimers $ parseInput input
   putStr "Part 1 : "
-  part1 input
+  print $ sum $ advanced!!80
   putStr "Part 2 : "
-  part2 input
+  print $ sum $ advanced!!256
