@@ -23,8 +23,7 @@ applyX 0 _ a = a
 applyX x f a = applyX (x-1) f (f a)
 
 part1 :: String -> IO ()
-part1 input = do
-  print $ length $ applyX 80 advance $ parseInput input
+part1 input = print $ length $ applyX 80 advance $ parseInput input
 
 -- Part 2 --
 
