@@ -27,9 +27,7 @@ solve input = do
   let max'    = maximum input'
 
   putStr "Part 1 : "
-  let fuels = map (fuelForPos input') [min'..max']
-  print $ snd $ head $ sortOn snd $ zip [min'..max'] fuels
+  print $ minimum $ map (fuelForPos input') [min'..max']
 
   putStr "Part 2 : "
-  let fuels2 = map (fuelForPos2 input') [min'..max']
-  print $ snd $ head $ sortOn snd $ zip [min'..max'] fuels2
+  print $ minimum $ map (fuelForPos2 input') [min'..max']
