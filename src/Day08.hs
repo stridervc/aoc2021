@@ -80,8 +80,7 @@ solveLine l = listToInt $ map (lookupKnown known) $ snd l
   where known = sherlock $ uncurry (<>) l
 
 part2 :: String -> IO ()
-part2 input = do
-  print $ sum $ map solveLine $ parseInput input
+part2 input = print $ sum $ map solveLine $ parseInput input
 
 solve :: String -> IO ()
 solve input = do
