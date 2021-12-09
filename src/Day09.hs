@@ -36,9 +36,9 @@ isLowest :: [[Int]] -> (Int,Int) -> Bool
 isLowest vals pos = val' < minimum (map (val vals) $ neighbours vals pos)
   where val'  = val vals pos
 
-lowPoints input = filter (isLowest input) [(x,y) | x <- [0..maxx], y <- [0..maxy]]
-  where maxx  = length (head input) - 1
-        maxy  = length input - 1
+lowPoints vals = filter (isLowest vals) [(x,y) | x <- [0..maxx], y <- [0..maxy]]
+  where maxx  = length (head vals) - 1
+        maxy  = length vals - 1
 
 -- Part 1 --
 
