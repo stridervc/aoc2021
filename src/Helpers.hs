@@ -3,12 +3,13 @@ module Helpers
   , sort
   , sortOn
   , transpose
+  , nub
   ) where
 
 import qualified Text.Parsec as P
 import Text.Parsec.String (Parser)
 
-import Data.List (sort, sortOn, transpose)
+import Data.List (sort, sortOn, transpose, nub)
 
 parseInt :: Parser Int
 parseInt = do
