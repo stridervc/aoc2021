@@ -33,8 +33,8 @@ neighbours vals (x,y)
         west  = (x-1,y)
 
 isLowest :: [[Int]] -> (Int,Int) -> Bool
-isLowest vals (x,y) = val' < minimum (map (val vals) $ neighbours vals (x,y))
-  where val'  = val vals (x,y)
+isLowest vals pos = val' < minimum (map (val vals) $ neighbours vals pos)
+  where val'  = val vals pos
 
 lowPoints input = filter (isLowest input) [(x,y) | x <- [0..maxx], y <- [0..maxy]]
   where maxx  = length (head input) - 1
