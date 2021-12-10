@@ -71,7 +71,7 @@ scoreLine2 score (c:cs) = scoreLine2 score' cs
 part2 :: Parsed -> IO ()
 part2 input = do
   let incompletes = filter (\l -> scoreLine1 [] l == 0) input
-  let scores = sort $ map (scoreLine2 0 . completeLine []) incompletes
+  let scores      = sort $ map (scoreLine2 0 . completeLine []) incompletes
   print $ scores!!((length scores - 1) `div` 2)
 
 solve :: String -> IO ()
