@@ -4,10 +4,10 @@ module Day10
 
 import Helpers
 
-type Input = [String]
+type Parsed = [String]
 
-parseInput :: String -> Input
-parseInput = lines
+parseParsed :: String -> Parsed
+parseParsed = lines
 
 -- Part 1 --
 
@@ -36,7 +36,7 @@ scoreLine1 stack (c:cs)
                 | c == '>'  = top == '<'
                 | otherwise = error "Error in 'scoreLine.matches'"
 
-part1 :: Input -> IO ()
+part1 :: Parsed -> IO ()
 part1 input = print $ sum $ map (scoreLine1 []) input
 
 -- Part 2 --
@@ -60,21 +60,15 @@ completeLine stack (c:cs)
   | opens     = completeLine pushed cs
   | otherwise = completeLine popped cs
   where opens   = c `elem` "([{<"
-        top     = head stack
         popped  = tail stack
         pushed  = c:stack
-        matches | c == ')'  = top == '('
-                | c == ']'  = top == '['
-                | c == '}'  = top == '{'
-                | c == '>'  = top == '<'
-                | otherwise = error "Error in 'completeLine.matches'"
 
 scoreLine2 :: Int -> String -> Int
 scoreLine2 score ""     = score
 scoreLine2 score (c:cs) = scoreLine2 score' cs
   where score'  = score * 5 + score2 c
 
-part2 :: Input -> IO ()
+part2 :: Parsed -> IO ()
 part2 input = do
   let incompletes = filter (\l -> scoreLine1 [] l == 0) input
   let scores = sort $ map (scoreLine2 0 . completeLine []) incompletes
@@ -83,6 +77,6 @@ part2 input = do
 solve :: String -> IO ()
 solve input = do
   putStr "Part 1 : "
-  part1 $ parseInput input
+  part1 $ parseParsed input
   putStr "Part 2 : "
-  part2 $ parseInput input
+  part2 $ parseParsed input
