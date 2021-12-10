@@ -6,8 +6,8 @@ import Helpers
 
 type Parsed = [String]
 
-parseParsed :: String -> Parsed
-parseParsed = lines
+parseInput :: String -> Parsed
+parseInput = lines
 
 -- Part 1 --
 
@@ -77,6 +77,6 @@ part2 input = do
 solve :: String -> IO ()
 solve input = do
   putStr "Part 1 : "
-  part1 $ parseParsed input
+  part1 $ parseInput input
   putStr "Part 2 : "
-  part2 $ parseParsed input
+  part2 $ parseInput input
