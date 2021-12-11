@@ -45,7 +45,7 @@ step (parsed, _) = (reset, count)
         count = M.foldl (\c (_,f) -> if f then c+1 else c) 0 flash
         reset = M.map (\(v,f) -> if v > 9 then (0,False) else (v,f)) flash
 
--- 101 because index 0 is just our input with iterate
+-- 101 because index 0 is just our input
 part1 :: Parsed -> IO ()
 part1 input = print $ sum $ map snd $ take 101 $ iterate step (input, 0)
 
