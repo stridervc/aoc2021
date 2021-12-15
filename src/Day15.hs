@@ -88,7 +88,7 @@ part2 :: Parsed -> IO ()
 part2 input = do
   let exploded  = explodeInput input
   let solved    = dijkstra $ inputToMap exploded
-  print 0
+  print False
   {-
   case M.lookup (maxX exploded, maxY exploded) solved of
     Nothing -> print "Impossible!"
