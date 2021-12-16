@@ -3,10 +3,12 @@ module Day15
   ) where
 
 -- Dijkstra
+-- do some profiling
 
 import Helpers
 import Data.Char (ord)
 import qualified Data.Map.Strict as M
+import qualified Data.Set as S
 
 type Coord  = (Int,Int)
 data Node   = Node
@@ -15,6 +17,7 @@ data Node   = Node
   , value     :: Int
   } deriving (Show)
 type NodeMap  = M.Map Coord Node
+type CoordSet = S.Set Coord
 
 type Parsed = [[Int]]
 
@@ -23,30 +26,27 @@ parseInput input = map readLine $ lines input
   where readLine []     = []
         readLine (x:xs) = (ord x - 48) : readLine xs
 
-getDistance :: Parsed -> Coord -> Int
-getDistance parsed (x,y) = parsed!!y!!x
-
 maxX :: Parsed -> Int
 maxX input = length (head input) - 1
 
 maxY :: Parsed -> Int
 maxY input = length input - 1
 
-dijkstra' :: (NodeMap, NodeMap) -> Coord -> (NodeMap, NodeMap)
-dijkstra' (visited,unvisited) visiting@(x,y)
-  | M.null unvisited' = (visited',mempty)
-  | otherwise         = dijkstra' (visited', unvisited') next
-  where neighbours          = filter (`M.member` unvisited) [ (x-1,y), (x+1,y), (x,y-1), (x,y+1) ]
-        Just visitnode      = M.lookup visiting unvisited
-        visitdist           = distance visitnode
-        updateNeighbour m n = M.update f n m
-        f orig@(Node d p v) = if visitdist + v < d then Just (Node (visitdist+v) (Just visiting) v) else Just orig
-        unvisited'          = M.delete visiting $ foldl updateNeighbour unvisited neighbours
-        visited'            = M.insert visiting visitnode visited
-        next                = fst $ head $ sortOn (distance . snd) $ M.toList unvisited'
+dijkstra' :: (CoordSet, NodeMap) -> Coord -> (CoordSet, NodeMap)
+dijkstra' (unvisited,nodes) visiting@(x,y)
+  | S.null unvisited' = (mempty, nodes')
+  | otherwise         = dijkstra' (unvisited', nodes') $ fst next
+  where neighbours          = filter (`S.member` unvisited) [ (x-1,y), (x+1,y), (x,y-1), (x,y+1) ]
+        Just node           = M.lookup visiting nodes
+        mydist              = distance node
+        updateNode m n      = M.update f n m
+        f orig@(Node d p v) = if mydist + v < d then Just (Node (mydist+v) (Just visiting) v) else Just orig
+        nodes'              = foldl updateNode nodes neighbours
+        unvisited'          = S.delete visiting unvisited
+        next                = M.foldrWithKey' (\k n accum -> if distance n < snd accum && S.member k unvisited' then (k,distance n) else accum) ((0,0),maxBound) nodes'
 
 dijkstra :: NodeMap -> NodeMap
-dijkstra input = fst $ dijkstra' (mempty,input) (0,0)
+dijkstra input = snd $ dijkstra' (S.fromList $ M.keys input, input) (0,0)
 
 inputToMap :: Parsed -> NodeMap
 inputToMap input = M.insert (0,0) homeNode $ M.fromList [ ((x,y),unvisitedNode $ value (x,y)) | x <- [0..maxX input], y <- [0..maxY input] ]
@@ -88,12 +88,9 @@ part2 :: Parsed -> IO ()
 part2 input = do
   let exploded  = explodeInput input
   let solved    = dijkstra $ inputToMap exploded
-  print False
-  {-
   case M.lookup (maxX exploded, maxY exploded) solved of
     Nothing -> print "Impossible!"
     Just n  -> print $ distance n
-    -}
 
 solve :: String -> IO ()
 solve input = do
