@@ -28,6 +28,7 @@ library:
   - parsec
   - split
   - containers
+  - mtl
 
 executables:
   aoc2021:

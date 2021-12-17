@@ -40,6 +40,7 @@ library
       Day13
       Day14
       Day15
+      Day16
       DayXX
       Helpers
   other-modules:
@@ -49,6 +50,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , mtl
     , parsec
     , split
   default-language: Haskell2010
