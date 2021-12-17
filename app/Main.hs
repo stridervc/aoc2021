@@ -20,6 +20,7 @@ import qualified Day14 (solve)
 import qualified Day15 (solve)
 import qualified Day16 (solve)
 import qualified Day17 (solve)
+import qualified Day18 (solve)
 
 solutions = M.fromList
   [ ("01", Day01.solve)
@@ -39,6 +40,7 @@ solutions = M.fromList
   , ("15", Day15.solve)
   , ("16", Day16.solve)
   , ("17", Day17.solve)
+  , ("18", Day18.solve)
   ]
 
 solveSingle :: String -> IO ()
